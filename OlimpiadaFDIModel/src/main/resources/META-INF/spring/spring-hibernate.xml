@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<!-- Configure Transaction Support - Access the JTA transaction manager -->
+    <bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+        <property name="transactionManagerName" value="java:jboss/TransactionManager" />
+        <property name="userTransactionName" value="java:jboss/UserTransaction" />
+    </bean>
+    
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+  	<tx:jta-transaction-manager />   
+
+    <!-- Olimpiada FDI Hibernate SessionFactory -->
+    <bean id="olimpiadaFDISessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+          p:dataSource-ref="olimpiadaFDIDataSource"
+          p:jtaTransactionManager-ref="transactionManager">
+        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+    </bean>
+    
+    <!-- Insignias FDI Hibernate SessionFactory -->
+    <bean id="insigniasFDISessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+          p:dataSource-ref="insigniasFDIDataSource"
+          p:jtaTransactionManager-ref="transactionManager">
+        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+    </bean>
+
+    <!-- Read in DAOs from the hibernate package -->
+    <context:component-scan base-package="com.fdi.olimpiada.integration.persistence"/>
+
+</beans>
