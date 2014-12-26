@@ -1,6 +1,9 @@
 package com.fdi.olimpiada.integration.persistence.dao.iface;
 
+import java.util.List;
+
 import com.fdi.olimpiada.commons.persistence.dao.iface.IGenericCustomDAO;
+import com.fdi.olimpiada.integration.persistence.entity.Insignias;
 import com.fdi.olimpiada.integration.persistence.entity.UsuarioHasInsignia;
 
 /**
@@ -11,5 +14,5 @@ import com.fdi.olimpiada.integration.persistence.entity.UsuarioHasInsignia;
 
 public interface IUsuarioHasInsigniaDAO extends IGenericCustomDAO<UsuarioHasInsignia, String> {
 	
-
+	public List<Insignias> getInsigniasDeUsuarioDAO(Integer usuario) throws Exception;
 }

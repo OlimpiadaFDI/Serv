@@ -43,8 +43,9 @@ public class QuickTestRestService {
 			PreguntaConRespuestasResponse response = new PreguntaConRespuestasResponse();
 			response.setPregunta(result.getPregunta());
 			response.setRespuestas(result.getRespuestas());
+			
 			s.setResult(response);
-
+			s.setCode(0);
 		} catch (Exception e) {
 			s.setCode(1);
 			s.setMessage(e.getMessage());

@@ -58,9 +58,9 @@ public class InsigniasRestService {
 			insigniasFacade.insertarUsuario(usuario);
 			
 			s.setMessage("OK");
-
+			s.setCode(0);
 		} catch (Exception e) {
-			s.setCode(1);
+			s.setCode(-1);
 			s.setMessage(e.getMessage());
 		}
 
@@ -84,9 +84,9 @@ public class InsigniasRestService {
 			insigniasFacade.insertarInsignia(insignia);
 			
 			s.setMessage("OK");
-
+			s.setCode(0);
 		} catch (Exception e) {
-			s.setCode(1);
+			s.setCode(-1);
 			s.setMessage(e.getMessage());
 		}
 
@@ -109,9 +109,9 @@ public class InsigniasRestService {
 			insigniasFacade.insertarGrupo(grupo);
 			
 			s.setMessage("OK");
-
+			s.setCode(0);
 		} catch (Exception e) {
-			s.setCode(1);
+			s.setCode(-1);
 			s.setMessage(e.getMessage());
 		}
 
@@ -135,9 +135,9 @@ public class InsigniasRestService {
 			insigniasFacade.asignarInsigniaAUsuario(asignarInsignia);
 			
 			s.setMessage("OK");
-
+			s.setCode(0);
 		} catch (Exception e) {
-			s.setCode(1);
+			s.setCode(-1);
 			s.setMessage(e.getMessage());
 		}
 
@@ -161,9 +161,9 @@ public class InsigniasRestService {
 			insigniasFacade.asignarUsuarioAGrupo(asignarUsuario);
 			
 			s.setMessage("OK");
-
+			s.setCode(0);
 		} catch (Exception e) {
-			s.setCode(1);
+			s.setCode(-1);
 			s.setMessage(e.getMessage());
 		}
 
@@ -179,18 +179,23 @@ public class InsigniasRestService {
 
 		try {
 			UsuarioConInsigniasResponse usuarioConInsignias = new UsuarioConInsigniasResponse();
+			Integer idUsuario=null;
+			idUsuario= insigniasFacade.existeUsuario(usuario);
+			if (idUsuario!=null && idUsuario!=0){
 			
-			usuarioConInsignias.setUsuario(usuario);
-			List<InsigniaFacadeDTO> insignias = insigniasFacade.getInsigniasUsuario(usuario);
-			
-			usuarioConInsignias.setInsignias(insignias);
-			
-			
-			
-			s.setMessage("OK");
-
+				List<InsigniaFacadeDTO> insignias = insigniasFacade.getInsigniasDeUsuario(idUsuario);
+				usuarioConInsignias.setUsuario(usuario);
+				usuarioConInsignias.setInsignias(insignias);
+				
+				s.setResult(usuarioConInsignias);			
+				s.setMessage("OK");
+				s.setCode(0);
+			}else{
+				s.setMessage("El usuario no existe");
+				s.setCode(-1);
+			}
 		} catch (Exception e) {
-			s.setCode(1);
+			s.setCode(-1);
 			s.setMessage(e.getMessage());
 		}
 

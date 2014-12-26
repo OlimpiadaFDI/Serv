@@ -29,7 +29,7 @@ public class RestaRestService {
 		try{
 			
 			s.setResult(10 - num);
-			
+			s.setCode(0);
 		} catch (Exception e){
 			s.setCode(1);
 			s.setMessage(e.getMessage());

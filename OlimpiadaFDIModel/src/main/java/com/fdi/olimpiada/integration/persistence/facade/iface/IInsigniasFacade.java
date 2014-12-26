@@ -27,7 +27,9 @@ public interface IInsigniasFacade {
 	
 	public void asignarUsuarioAGrupo(AsignarUsuarioFacadeRequestDTO asignarUsuario) throws Exception;
 	
-	public List<InsigniaFacadeDTO> getInsigniasUsuario(String Usuario)throws Exception;
+	public List<InsigniaFacadeDTO> getInsigniasDeUsuario(Integer Usuario)throws Exception;
+	
+	public Integer existeUsuario(String nombreUsuario) throws Exception;
 
 		
 }

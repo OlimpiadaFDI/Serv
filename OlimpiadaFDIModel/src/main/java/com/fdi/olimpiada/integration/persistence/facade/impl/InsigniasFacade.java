@@ -112,15 +112,37 @@ public class InsigniasFacade implements IInsigniasFacade {
 	}	
 	
 	@Transactional
-	public List<InsigniaFacadeDTO> getInsigniasUsuario(String usuario) throws Exception {
+	public Integer existeUsuario(String nombreUsuario) throws Exception {
+		
+		Integer idUsuario=null;
+		List<Usuarios> usuarios = usuariosDAO.findByProperty("NOMBRE", nombreUsuario);
+		if (usuarios!=null){
+			idUsuario=usuarios.get(0).getIdUsuario();
+		}else{
+			idUsuario=0;
+		}
+				
+		return idUsuario;
+	}
+	
+	@Transactional
+	public List<InsigniaFacadeDTO> getInsigniasDeUsuario(Integer usuario) throws Exception {
 		
 		List<InsigniaFacadeDTO> insignias = new ArrayList<InsigniaFacadeDTO>();
 		
 		List<Insignias> aux = new ArrayList<Insignias>();
 		
-		//hacer la query y llamarla
-		return insignias;
+		aux = usuarioHasInsigniaDAO.getInsigniasDeUsuarioDAO(usuario);
 		
-	}	
+		for (Insignias insigniaAux : aux){
+			InsigniaFacadeDTO insignia = new InsigniaFacadeDTO();
+			insignia.setDescCorta(insigniaAux.getDescCorta());
+			insignia.setDescLarga(insigniaAux.getDescLarga());
+			insignia.setIdInsignia(insigniaAux.getIdInsignia());
+			insignia.setPuntuacion(insigniaAux.getPuntuacion());
+			insignias.add(insignia);
+		}	
+		return insignias;
+	}
 
 }

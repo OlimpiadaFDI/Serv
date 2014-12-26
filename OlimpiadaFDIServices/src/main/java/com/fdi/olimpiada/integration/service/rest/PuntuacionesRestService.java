@@ -37,7 +37,7 @@ public class PuntuacionesRestService {
 		try {
 
 			s.setResult(request.getUser());
-
+			s.setCode(0);
 		} catch (Exception e) {
 			s.setCode(1);
 			s.setMessage(e.getMessage());
@@ -58,7 +58,7 @@ public class PuntuacionesRestService {
 			
 			puntuacionesFacade.guardarPuntuacion(request.getUser(),request.getPuntuacion());
 			s.setResult(request.getUser());
-
+			s.setCode(0);
 		} catch (Exception e) {
 			s.setCode(1);
 			s.setMessage(e.getMessage());
