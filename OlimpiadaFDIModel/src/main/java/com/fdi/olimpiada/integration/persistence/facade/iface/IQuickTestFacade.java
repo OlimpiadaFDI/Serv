@@ -11,6 +11,8 @@ import com.fdi.olimpiada.integration.persistence.facade.iface.dto.PreguntaConRes
 public interface IQuickTestFacade {
 	
 	public PreguntaConRespuestasFacadeDTO getPreguntaConRespuestas() throws Exception;
+	
+	public PreguntaConRespuestasFacadeDTO getPreguntaPorTipoConRespuestas(Integer tipo) throws Exception;
 
 		
 }

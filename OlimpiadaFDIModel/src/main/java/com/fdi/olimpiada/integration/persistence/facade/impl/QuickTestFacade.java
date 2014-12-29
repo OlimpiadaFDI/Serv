@@ -2,6 +2,7 @@ package com.fdi.olimpiada.integration.persistence.facade.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,50 @@ public class QuickTestFacade implements IQuickTestFacade {
 		
 		
 		Preguntas pregunta = preguntasDAO.findById(id);
+		PreguntaFacadeDTO preguntaFacade = new PreguntaFacadeDTO();
+		if (pregunta!=null){
+			preguntaFacade.setIdPregunta(pregunta.getIdPregunta());
+			preguntaFacade.setPregunta(pregunta.getPregunta());
+			preguntaFacade.setRespuestaCorrecta(pregunta.getRespuestaCorrecta());
+			preguntaFacade.setTipo(pregunta.getTipo());
+		}
+		
+		preguntaConRespuestas.setPregunta(preguntaFacade);
+		
+		List<Respuestas> respuestas = respuestasDAO.findByProperty("idPregunta", pregunta.getIdPregunta());
+		
+		List<RespuestaFacadeDTO> respuestasResponse =new ArrayList<RespuestaFacadeDTO>();
+		if (respuestas != null && !respuestas.isEmpty()){
+			for (Respuestas respuesta : respuestas){
+				if (respuesta != null){
+					RespuestaFacadeDTO respuestaFacade = new RespuestaFacadeDTO();
+					respuestaFacade.setIdPregunta(respuesta.getIdPregunta());
+					respuestaFacade.setIdRespuesta(respuesta.getIdRespuesta());
+					respuestaFacade.setRespuesta(respuesta.getRespuesta());
+					
+					respuestasResponse.add(respuestaFacade);
+				}
+			}
+		}
+		
+		preguntaConRespuestas.setRespuestas(respuestasResponse);
+		
+		return preguntaConRespuestas;
+		
+		
+		
+	}	
+	
+	@Transactional
+	public PreguntaConRespuestasFacadeDTO getPreguntaPorTipoConRespuestas(Integer tipo) throws Exception {
+		
+		PreguntaConRespuestasFacadeDTO preguntaConRespuestas = new PreguntaConRespuestasFacadeDTO();
+		
+		List<Preguntas> preguntas = preguntasDAO.findByProperty("tipo", tipo);
+		int tamaño = preguntas.size();
+		Random rand = new Random();
+		int pos = rand.nextInt(tamaño);
+		Preguntas pregunta = preguntas.get(pos);
 		PreguntaFacadeDTO preguntaFacade = new PreguntaFacadeDTO();
 		if (pregunta!=null){
 			preguntaFacade.setIdPregunta(pregunta.getIdPregunta());

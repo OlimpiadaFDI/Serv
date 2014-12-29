@@ -115,8 +115,11 @@ public class InsigniasFacade implements IInsigniasFacade {
 	public Integer existeUsuario(String nombreUsuario) throws Exception {
 		
 		Integer idUsuario=null;
-		List<Usuarios> usuarios = usuariosDAO.findByProperty("NOMBRE", nombreUsuario);
-		if (usuarios!=null){
+//		Usuarios usuario = new Usuarios();
+//		usuario.setNombre(nombreUsuario);
+//		List<Usuarios> usuarios = usuariosDAO.findByExample(usuario);
+		List<Usuarios> usuarios = usuariosDAO.findByProperty("nombre", nombreUsuario);
+		if (usuarios!=null && !usuarios.isEmpty()){
 			idUsuario=usuarios.get(0).getIdUsuario();
 		}else{
 			idUsuario=0;

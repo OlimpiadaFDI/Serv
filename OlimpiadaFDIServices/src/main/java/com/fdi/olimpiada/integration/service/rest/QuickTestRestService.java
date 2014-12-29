@@ -4,6 +4,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -40,6 +41,30 @@ public class QuickTestRestService {
 		try {
 
 			PreguntaConRespuestasFacadeDTO result = quickTestFacade.getPreguntaConRespuestas();
+			PreguntaConRespuestasResponse response = new PreguntaConRespuestasResponse();
+			response.setPregunta(result.getPregunta());
+			response.setRespuestas(result.getRespuestas());
+			
+			s.setResult(response);
+			s.setCode(0);
+		} catch (Exception e) {
+			s.setCode(1);
+			s.setMessage(e.getMessage());
+		}
+
+		return Response.ok(s).build();
+	}
+	
+	@GET
+	@Path("/preguntaPorTipo/{tipo}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getPreguntaPorTipo(@PathParam("tipo") Integer tipo) {
+
+		ServiceResponse<PreguntaConRespuestasResponse> s = new ServiceResponse<PreguntaConRespuestasResponse>();
+
+		try {
+
+			PreguntaConRespuestasFacadeDTO result = quickTestFacade.getPreguntaPorTipoConRespuestas(tipo);
 			PreguntaConRespuestasResponse response = new PreguntaConRespuestasResponse();
 			response.setPregunta(result.getPregunta());
 			response.setRespuestas(result.getRespuestas());
