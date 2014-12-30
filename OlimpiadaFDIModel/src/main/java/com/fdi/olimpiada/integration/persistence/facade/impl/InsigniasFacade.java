@@ -24,6 +24,7 @@ import com.fdi.olimpiada.integration.persistence.facade.iface.dto.AsignarUsuario
 import com.fdi.olimpiada.integration.persistence.facade.iface.dto.GrupoFacadeRequestDTO;
 import com.fdi.olimpiada.integration.persistence.facade.iface.dto.InsigniaFacadeDTO;
 import com.fdi.olimpiada.integration.persistence.facade.iface.dto.InsigniaFacadeRequestDTO;
+import com.fdi.olimpiada.integration.persistence.facade.iface.dto.LogginUsuarioFacadeRequestDTO;
 import com.fdi.olimpiada.integration.persistence.facade.iface.dto.UsuarioFacadeRequestDTO;
 
 /**
@@ -56,8 +57,9 @@ public class InsigniasFacade implements IInsigniasFacade {
 		
 		Usuarios usuarioSave = new Usuarios();
 		usuarioSave.setCorreo(usuario.getCorreo());
-		usuarioSave.setIdUsuario(usuario.getIdUsuario());
+		usuarioSave.setIdUsuario(Calendar.getInstance().getTimeInMillis());
 		usuarioSave.setNombre(usuario.getNombre());
+		usuarioSave.setPass(usuario.getPass());
 		
 		usuariosDAO.save(usuarioSave);
 		
@@ -112,24 +114,21 @@ public class InsigniasFacade implements IInsigniasFacade {
 	}	
 	
 	@Transactional
-	public Integer existeUsuario(String nombreUsuario) throws Exception {
+	public Long existeUsuario(String nombreUsuario) throws Exception {
 		
-		Integer idUsuario=null;
-//		Usuarios usuario = new Usuarios();
-//		usuario.setNombre(nombreUsuario);
-//		List<Usuarios> usuarios = usuariosDAO.findByExample(usuario);
+		Long idUsuario=null;
 		List<Usuarios> usuarios = usuariosDAO.findByProperty("nombre", nombreUsuario);
 		if (usuarios!=null && !usuarios.isEmpty()){
 			idUsuario=usuarios.get(0).getIdUsuario();
 		}else{
-			idUsuario=0;
+			idUsuario=(long)0;
 		}
 				
 		return idUsuario;
 	}
 	
 	@Transactional
-	public List<InsigniaFacadeDTO> getInsigniasDeUsuario(Integer usuario) throws Exception {
+	public List<InsigniaFacadeDTO> getInsigniasDeUsuario(Long usuario) throws Exception {
 		
 		List<InsigniaFacadeDTO> insignias = new ArrayList<InsigniaFacadeDTO>();
 		
@@ -146,6 +145,25 @@ public class InsigniasFacade implements IInsigniasFacade {
 			insignias.add(insignia);
 		}	
 		return insignias;
+	}
+	
+	@Transactional
+	public Integer comprobarLoggin(LogginUsuarioFacadeRequestDTO logginUsuario) throws Exception {
+		
+		Integer loggin=null;
+		List<Usuarios> usuarios = usuariosDAO.findByProperty("nombre", logginUsuario.getNombre());
+		if (usuarios!=null && !usuarios.isEmpty()){
+			if (usuarios.get(0).getPass().equals(logginUsuario.getPass())){
+				loggin = 0;
+			}
+			else{
+				loggin = -1;
+			}
+		}else{
+			loggin= -2;
+		}
+				
+		return loggin;
 	}
 
 }

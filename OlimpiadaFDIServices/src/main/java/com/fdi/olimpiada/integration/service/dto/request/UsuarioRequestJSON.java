@@ -11,9 +11,9 @@ import javax.ws.rs.FormParam;
 public class UsuarioRequestJSON {
 	
 	
-	private Integer idUsuario;
 	private String nombre;
 	private String correo;
+	private String pass;
 
 
 	
@@ -21,14 +21,6 @@ public class UsuarioRequestJSON {
 		super();
 	}
 	
-	public Integer getIdUsuario() {
-		return idUsuario;
-	}
-	
-	@FormParam("idUsuario")
-	public void setIdUsuario(Integer idUsuario) {
-		this.idUsuario = idUsuario;
-	}
 
 	public String getNombre() {
 		return nombre;
@@ -47,16 +39,20 @@ public class UsuarioRequestJSON {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
+	
+	public String getPass() {
+		return pass;
+	}
+
+	@FormParam("pass")
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("UsuarioRequestJSON [");
-		if (idUsuario != null) {
-			builder.append("idUsuario=");
-			builder.append(idUsuario);
-			builder.append(", ");
-		}
 		if (nombre != null) {
 			builder.append("nombre=");
 			builder.append(nombre);
@@ -65,6 +61,11 @@ public class UsuarioRequestJSON {
 		if (correo != null) {
 			builder.append("correo=");
 			builder.append(correo);
+			builder.append(", ");
+		}
+		if (pass != null) {
+			builder.append("pass=");
+			builder.append(pass);
 		}
 		builder.append("]");
 		return builder.toString();

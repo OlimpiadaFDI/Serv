@@ -21,7 +21,7 @@ public class UsuarioHasInsignia implements DomainObject,java.io.Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String idUsuarioHasInsignia;
-	private Integer idUsuario;
+	private Long idUsuario;
 	private Integer idInsignia;
 	
 
@@ -34,7 +34,7 @@ public class UsuarioHasInsignia implements DomainObject,java.io.Serializable {
 	}
 
 	/** full constructor */
-	public UsuarioHasInsignia(String idUsuarioHasInsignia,Integer idUsuario,Integer idInsignia) {
+	public UsuarioHasInsignia(String idUsuarioHasInsignia,Long idUsuario,Integer idInsignia) {
 		this.idUsuarioHasInsignia = idUsuarioHasInsignia;
 		this.idUsuario = idUsuario;
 		this.idInsignia = idInsignia;
@@ -63,11 +63,11 @@ public class UsuarioHasInsignia implements DomainObject,java.io.Serializable {
 	}
 	
 	@Column(name = "USUARIOS_ID_USUARIO", nullable = false)
-	public Integer getIdUsuario() {
+	public Long getIdUsuario() {
 		return this.idUsuario;
 	}
 
-	public void setIdUsuario(Integer idUsuario) {
+	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 

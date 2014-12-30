@@ -7,6 +7,7 @@ import com.fdi.olimpiada.integration.persistence.facade.iface.dto.AsignarUsuario
 import com.fdi.olimpiada.integration.persistence.facade.iface.dto.GrupoFacadeRequestDTO;
 import com.fdi.olimpiada.integration.persistence.facade.iface.dto.InsigniaFacadeDTO;
 import com.fdi.olimpiada.integration.persistence.facade.iface.dto.InsigniaFacadeRequestDTO;
+import com.fdi.olimpiada.integration.persistence.facade.iface.dto.LogginUsuarioFacadeRequestDTO;
 import com.fdi.olimpiada.integration.persistence.facade.iface.dto.UsuarioFacadeRequestDTO;
 
 /**
@@ -27,9 +28,11 @@ public interface IInsigniasFacade {
 	
 	public void asignarUsuarioAGrupo(AsignarUsuarioFacadeRequestDTO asignarUsuario) throws Exception;
 	
-	public List<InsigniaFacadeDTO> getInsigniasDeUsuario(Integer Usuario)throws Exception;
+	public List<InsigniaFacadeDTO> getInsigniasDeUsuario(Long Usuario)throws Exception;
 	
-	public Integer existeUsuario(String nombreUsuario) throws Exception;
+	public Long existeUsuario(String nombreUsuario) throws Exception;
+
+	public Integer comprobarLoggin(LogginUsuarioFacadeRequestDTO logginUsuario) throws Exception;
 
 		
 }

@@ -21,11 +21,13 @@ import com.fdi.olimpiada.integration.persistence.facade.iface.dto.AsignarUsuario
 import com.fdi.olimpiada.integration.persistence.facade.iface.dto.GrupoFacadeRequestDTO;
 import com.fdi.olimpiada.integration.persistence.facade.iface.dto.InsigniaFacadeDTO;
 import com.fdi.olimpiada.integration.persistence.facade.iface.dto.InsigniaFacadeRequestDTO;
+import com.fdi.olimpiada.integration.persistence.facade.iface.dto.LogginUsuarioFacadeRequestDTO;
 import com.fdi.olimpiada.integration.persistence.facade.iface.dto.UsuarioFacadeRequestDTO;
 import com.fdi.olimpiada.integration.service.dto.request.AsignarInsigniaRequestJSON;
 import com.fdi.olimpiada.integration.service.dto.request.AsignarUsuarioRequestJSON;
 import com.fdi.olimpiada.integration.service.dto.request.GrupoRequestJSON;
 import com.fdi.olimpiada.integration.service.dto.request.InsigniaRequestJSON;
+import com.fdi.olimpiada.integration.service.dto.request.LogginUsuarioRequestJSON;
 import com.fdi.olimpiada.integration.service.dto.request.UsuarioRequestJSON;
 import com.fdi.olimpiada.integration.service.dto.response.ServiceResponse;
 import com.fdi.olimpiada.integration.service.dto.response.UsuarioConInsigniasResponse;
@@ -53,8 +55,8 @@ public class InsigniasRestService {
 		try {
 			UsuarioFacadeRequestDTO usuario = new UsuarioFacadeRequestDTO();
 			usuario.setCorreo(request.getCorreo());
-			usuario.setIdUsuario(request.getIdUsuario());
 			usuario.setNombre(request.getNombre());
+			usuario.setPass(request.getPass());
 			insigniasFacade.insertarUsuario(usuario);
 			
 			s.setMessage("OK");
@@ -130,12 +132,18 @@ public class InsigniasRestService {
 			AsignarInsigniaFacadeRequestDTO asignarInsignia = new AsignarInsigniaFacadeRequestDTO();
 			
 			asignarInsignia.setIdInsignia(request.getIdInsignia());
-			asignarInsignia.setIdUsuario(request.getIdUsuario());
-			
-			insigniasFacade.asignarInsigniaAUsuario(asignarInsignia);
-			
-			s.setMessage("OK");
-			s.setCode(0);
+			Long idUsuario= insigniasFacade.existeUsuario(request.getNombreUsuario());
+			if (idUsuario!=null && idUsuario!=0){
+				
+				asignarInsignia.setIdUsuario(idUsuario);
+				insigniasFacade.asignarInsigniaAUsuario(asignarInsignia);
+		
+				s.setMessage("OK");
+				s.setCode(0);
+			}else{
+				s.setMessage("El usuario no existe");
+				s.setCode(-1);
+			}
 		} catch (Exception e) {
 			s.setCode(-1);
 			s.setMessage(e.getMessage());
@@ -156,12 +164,18 @@ public class InsigniasRestService {
 			AsignarUsuarioFacadeRequestDTO asignarUsuario = new AsignarUsuarioFacadeRequestDTO();
 			
 			asignarUsuario.setIdGrupo(request.getIdGrupo());
-			asignarUsuario.setIdUsuario(request.getIdUsuario());
-			
-			insigniasFacade.asignarUsuarioAGrupo(asignarUsuario);
-			
-			s.setMessage("OK");
-			s.setCode(0);
+			Long idUsuario= insigniasFacade.existeUsuario(request.getNombreUsuario());
+			if (idUsuario!=null && idUsuario!=0){
+				
+				asignarUsuario.setIdUsuario(idUsuario);
+				insigniasFacade.asignarUsuarioAGrupo(asignarUsuario);
+		
+				s.setMessage("OK");
+				s.setCode(0);
+			}else{
+				s.setMessage("El usuario no existe");
+				s.setCode(-1);
+			}
 		} catch (Exception e) {
 			s.setCode(-1);
 			s.setMessage(e.getMessage());
@@ -179,7 +193,7 @@ public class InsigniasRestService {
 
 		try {
 			UsuarioConInsigniasResponse usuarioConInsignias = new UsuarioConInsigniasResponse();
-			Integer idUsuario=null;
+			Long idUsuario=null;
 			idUsuario= insigniasFacade.existeUsuario(usuario);
 			if (idUsuario!=null && idUsuario!=0){
 			
@@ -201,6 +215,47 @@ public class InsigniasRestService {
 
 		return Response.ok(s).build();
 	}
+	
+	@POST
+	@Path("/logginUsuario")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response hacerLoggin(LogginUsuarioRequestJSON request) {
+
+		ServiceResponse<String> s = new ServiceResponse<String>();
+
+		try {
+			LogginUsuarioFacadeRequestDTO logginUsuario = new LogginUsuarioFacadeRequestDTO();
+			
+			
+			logginUsuario.setNombre(request.getNombre());
+			logginUsuario.setPass(request.getPass());
+			
+			
+			Integer loggin = insigniasFacade.comprobarLoggin(logginUsuario);
+			
+			if (loggin==0){
+				s.setMessage("OK");
+				s.setCode(0);
+				s.setResult("loggin correcto");
+			}
+			else if (loggin == -1){
+				s.setCode(-1);
+				s.setResult("El password es incorrecto");
+			}
+			else if (loggin == -2){
+				s.setCode(-1);
+				s.setResult("El usuario no existe");
+			}
+		} catch (Exception e) {
+			s.setCode(-1);
+			s.setMessage(e.getMessage());
+		}
+
+		return Response.ok(s).build();
+	}
+	
+	
 
 	
 }

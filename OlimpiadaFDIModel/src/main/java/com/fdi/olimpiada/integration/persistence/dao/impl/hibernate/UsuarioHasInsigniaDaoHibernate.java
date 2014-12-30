@@ -26,7 +26,7 @@ public class UsuarioHasInsigniaDaoHibernate extends _InsigniasFDIGenericDaoHiber
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Insignias> getInsigniasDeUsuarioDAO(Integer usuario) throws Exception {
+	public List<Insignias> getInsigniasDeUsuarioDAO(Long usuario) throws Exception {
 		try {
 
 			StringBuilder sql = new StringBuilder();

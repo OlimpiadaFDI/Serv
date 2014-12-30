@@ -14,5 +14,5 @@ import com.fdi.olimpiada.integration.persistence.entity.UsuarioHasInsignia;
 
 public interface IUsuarioHasInsigniaDAO extends IGenericCustomDAO<UsuarioHasInsignia, String> {
 	
-	public List<Insignias> getInsigniasDeUsuarioDAO(Integer usuario) throws Exception;
+	public List<Insignias> getInsigniasDeUsuarioDAO(Long usuario) throws Exception;
 }

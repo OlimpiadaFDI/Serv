@@ -11,20 +11,20 @@ import javax.ws.rs.FormParam;
 public class AsignarInsigniaRequestJSON {
 	
 	
-	private Integer idUsuario;
+	private String nombreUsuario;
 	private Integer idInsignia;
 
 	public AsignarInsigniaRequestJSON(){
 		super();
 	}
 	
-	public Integer getIdUsuario() {
-		return idUsuario;
+	public String getNombreUsuario() {
+		return nombreUsuario;
 	}
 	
-	@FormParam("idUsuario")
-	public void setIdUsuario(Integer idUsuario) {
-		this.idUsuario = idUsuario;
+	@FormParam("nombreUsuario")
+	public void setNombreUsuario(String nombreUsuario) {
+		this.nombreUsuario = nombreUsuario;
 	}
 
 	public Integer getIdInsignia() {
@@ -40,9 +40,9 @@ public class AsignarInsigniaRequestJSON {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("AsignarInsigniaRequestJSON [");
-		if (idUsuario != null) {
-			builder.append("idUsuario=");
-			builder.append(idUsuario);
+		if (nombreUsuario != null) {
+			builder.append("nombreUsuario=");
+			builder.append(nombreUsuario);
 			builder.append(", ");
 		}
 		if (idInsignia != null) {

@@ -11,7 +11,7 @@ package com.fdi.olimpiada.integration.persistence.facade.iface.dto;
 public class AsignarUsuarioFacadeRequestDTO {
 	
 	
-	private Integer idUsuario;
+	private Long idUsuario;
 	private Integer idGrupo;
 
 
@@ -19,11 +19,11 @@ public class AsignarUsuarioFacadeRequestDTO {
 		super();
 	}
 	
-	public Integer getIdUsuario() {
+	public Long getIdUsuario() {
 		return idUsuario;
 	}
 	
-	public void setIdUsuario(Integer idUsuario) {
+	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 

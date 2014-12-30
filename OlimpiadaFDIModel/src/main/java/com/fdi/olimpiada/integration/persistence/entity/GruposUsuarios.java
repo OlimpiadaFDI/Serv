@@ -21,7 +21,7 @@ public class GruposUsuarios implements DomainObject,java.io.Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String idGruposUsuarios;
-	private Integer idUsuario;
+	private Long idUsuario;
 	private Integer idGrupo;
 	
 
@@ -34,7 +34,7 @@ public class GruposUsuarios implements DomainObject,java.io.Serializable {
 	}
 
 	/** full constructor */
-	public GruposUsuarios(String idGruposUsuarios,Integer idUsuario,Integer idGrupo) {
+	public GruposUsuarios(String idGruposUsuarios,Long idUsuario,Integer idGrupo) {
 		this.idGruposUsuarios = idGruposUsuarios;
 		this.idUsuario = idUsuario;
 		this.idGrupo = idGrupo;
@@ -63,11 +63,11 @@ public class GruposUsuarios implements DomainObject,java.io.Serializable {
 	}
 	
 	@Column(name = "USUARIOS_ID_USUARIO", nullable = false)
-	public Integer getIdUsuario() {
+	public Long getIdUsuario() {
 		return this.idUsuario;
 	}
 
-	public void setIdUsuario(Integer idUsuario) {
+	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 

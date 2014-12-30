@@ -20,9 +20,10 @@ public class Usuarios implements DomainObject,java.io.Serializable {
 	// Fields
 	
 	private static final long serialVersionUID = 1L;
-	private Integer idUsuario;
+	private Long idUsuario;
 	private String nombre;
 	private String correo;
+	private String pass;
 
 	
 
@@ -33,10 +34,11 @@ public class Usuarios implements DomainObject,java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Usuarios(Integer idUsuario,String nombre,String correo) {
+	public Usuarios(Long idUsuario,String nombre,String correo, String pass) {
 		this.idUsuario = idUsuario;
 		this.nombre = nombre;
 		this.correo = correo;
+		this.pass = pass;
 		
 	}
 
@@ -44,11 +46,11 @@ public class Usuarios implements DomainObject,java.io.Serializable {
 	
 	@Id
 	@Column(name = "ID_USUARIO", unique = true, nullable = false)
-	public Integer getIdUsuario() {
+	public Long getIdUsuario() {
 		return this.idUsuario;
 	}
 
-	public void setIdUsuario(Integer idUsuario) {
+	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 	
@@ -68,6 +70,15 @@ public class Usuarios implements DomainObject,java.io.Serializable {
 
 	public void setCorreo(String correo) {
 		this.correo = correo;
+	}
+	
+	@Column(name = "PASS", nullable = false)
+	public String getPass() {
+		return this.pass;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
 	}
 
 
